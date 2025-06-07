@@ -57,7 +57,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observe elements for animation
-document.querySelectorAll('.product-card, .benefit-card, .testimonial-card').forEach(el => {
+document.querySelectorAll('.product-card, .benefit-card, .testimonial-card, .mission-item, .value-item, .promotion-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(30px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -91,11 +91,11 @@ document.querySelectorAll('.btn-product').forEach(button => {
         // Button animation
         const originalText = this.textContent;
         this.textContent = 'Đã thêm!';
-        this.style.background = '#4caf50';
+        this.style.background = '#8ebe49';
         
         setTimeout(() => {
             this.textContent = originalText;
-            this.style.background = '#2d8f47';
+            this.style.background = '#5a8d4c';
         }, 2000);
     });
 });
@@ -122,7 +122,7 @@ function showNotification(message, type = 'info') {
         position: fixed;
         top: 100px;
         right: 20px;
-        background: ${type === 'success' ? '#4caf50' : '#2d8f47'};
+        background: ${type === 'success' ? '#8ebe49' : '#5a8d4c'};
         color: white;
         padding: 1rem 1.5rem;
         border-radius: 10px;
@@ -174,7 +174,7 @@ document.querySelectorAll('.btn-primary').forEach(button => {
 document.querySelectorAll('.btn-secondary').forEach(button => {
     if (button.textContent.includes('Gọi:')) {
         button.addEventListener('click', () => {
-            window.location.href = 'tel:19001234';
+            window.location.href = 'tel:+84123456789';
         });
     }
 });
@@ -200,29 +200,57 @@ function animateCounters() {
         const updateCounter = () => {
             if (current < target) {
                 current += increment;
-                counter.textContent = Math.ceil(current) + (counter.textContent.includes('g') ? 'g' : '');
+                counter.textContent = Math.floor(current) + (counter.dataset.suffix || '');
                 requestAnimationFrame(updateCounter);
             } else {
-                counter.textContent = target + (counter.textContent.includes('g') ? 'g' : '');
+                counter.textContent = target + (counter.dataset.suffix || '');
             }
         };
         
-        // Start animation when element is visible
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    updateCounter();
-                    observer.unobserve(entry.target);
-                }
-            });
-        });
-        
-        observer.observe(counter);
+        updateCounter();
     });
 }
 
-// Initialize counter animation
-animateCounters();
+// Trigger counter animation when section is visible
+const nutritionSection = document.querySelector('.nutrition');
+if (nutritionSection) {
+    const nutritionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                nutritionObserver.unobserve(entry.target);
+            }
+        });
+    });
+    
+    nutritionObserver.observe(nutritionSection);
+}
+
+// Mission and Values section animations
+document.querySelectorAll('.mission-item, .value-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+        item.style.transform = 'translateY(-8px) scale(1.02)';
+        item.style.boxShadow = '0 8px 25px rgba(90, 141, 76, 0.15)';
+    });
+    
+    item.addEventListener('mouseleave', () => {
+        item.style.transform = 'translateY(0) scale(1)';
+        item.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+    });
+});
+
+// Promotion card animation
+document.querySelectorAll('.promotion-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-5px) scale(1.02)';
+        card.style.boxShadow = '0 15px 40px rgba(0,0,0,0.25)';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0) scale(1)';
+        card.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+    });
+});
 
 // Image lazy loading
 function lazyLoadImages() {
@@ -252,7 +280,7 @@ function validateForm(form) {
     
     inputs.forEach(input => {
         if (!input.value.trim()) {
-            input.style.borderColor = '#e74c3c';
+            input.style.borderColor = '#9f663d';
             isValid = false;
         } else {
             input.style.borderColor = '#ddd';
@@ -345,14 +373,15 @@ window.addEventListener('scroll', debouncedScrollHandler);
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('EnergyBoost Landing Page Loaded Successfully!');
+    console.log('Barrier Bar Landing Page Loaded Successfully!');
     
     // Add any initialization code here
     
     // Preload critical images
     const criticalImages = [
-        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b',
-        'https://images.unsplash.com/photo-1606312619070-d48b4c652a52'
+        'images/z6680957121966_6bf75582cf54011e4f75c904164caac1.jpg',
+        'images/z6680957122026_8eb417ee8c9f8d26d0247a317fde5bb5.jpg',
+        'images/z6680957163658_4dcbbc14caeefb0c7d9120cbc73e1fb2.jpg'
     ];
     
     criticalImages.forEach(src => {
@@ -364,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Error handling for images
 document.querySelectorAll('img').forEach(img => {
     img.addEventListener('error', function() {
-        this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkVuZXJneSBCYXI8L3RleHQ+PC9zdmc+';
-        this.alt = 'Energy Bar Image';
+        this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJhcnJpZXIgQmFyPC90ZXh0Pjwvc3ZnPg==';
+        this.alt = 'Barrier Bar Image';
     });
 }); 

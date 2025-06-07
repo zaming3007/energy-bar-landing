@@ -6,8 +6,8 @@ Một landing page hiện đại và đẹp mắt cho sản phẩm thanh năng l
 
 ### Thiết kế
 - **Responsive Design**: Tương thích hoàn hảo trên mọi thiết bị (desktop, tablet, mobile)
-- **Modern UI/UX**: Thiết kế hiện đại với gradient màu xanh lá tự nhiên
-- **Smooth Animations**: Hiệu ứng mượt mà khi scroll và hover
+- **Moderent màu xanh lá tự nhiên
+- **Smooth Animations**: Hiệu ứng mượt mà khi n UI/UX**: Thiết kế hiện đại với gradiscroll và hover
 - **Interactive Elements**: Các thành phần tương tác thân thiện với người dùng
 
 ### Sections
